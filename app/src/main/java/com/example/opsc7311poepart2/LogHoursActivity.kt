@@ -138,11 +138,12 @@ class LogHoursActivity : AppCompatActivity() {
             imageUri?.let { uri ->
                 val storageRef = storageReference.reference.child("images/${System.currentTimeMillis()}")
                 storageRef.putFile(uri)
-                    .addOnSuccessListener {
+                    .addOnSuccessListener { taskSnapshot ->
                         storageRef.downloadUrl.addOnSuccessListener { imageUrl ->
                             // Save data to Firebase Realtime Database
                             val selectedDateStr = selectedDate.toString()
                             val timeDifferenceStr = timeDifference.toString()
+                            val imageUrlString = imageUrl.toString() // Obtain the download URL of the image
                             val timeLogId = databaseReference.push().key
                             timeLogId?.let {
                                 val timeLog = TimeLog(
@@ -151,16 +152,27 @@ class LogHoursActivity : AppCompatActivity() {
                                     timeDifferenceStr,
                                     selectedCategory,
                                     description,
-                                    imageUrl.toString()
+                                    imageUrlString
                                 )
                                 databaseReference.child(it).setValue(timeLog)
+                                    .addOnSuccessListener {
+                                        // Data saved successfully
+                                        Toast.makeText(this, "Time log added successfully", Toast.LENGTH_SHORT).show()
+                                    }
+                                    .addOnFailureListener { e ->
+                                        // Handle errors
+                                        Log.e(TAG, "Error adding time log to database: $e")
+                                        Toast.makeText(this, "Failed to add time log", Toast.LENGTH_SHORT).show()
+                                    }
                             }
                         }
                     }
                     .addOnFailureListener { exception ->
                         // Handle unsuccessful upload
+                        Log.e(TAG, "Error uploading image: $exception")
+                        Toast.makeText(this, "Failed to upload image", Toast.LENGTH_SHORT).show()
                     }
-            } ?: run {
+            }?: run {
                 // Save data to Firebase Realtime Database without image
                 val selectedDateStr = selectedDate.toString()
                 val timeDifferenceStr = timeDifference.toString()
