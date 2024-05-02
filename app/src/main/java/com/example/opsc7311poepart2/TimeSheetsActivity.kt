@@ -51,6 +51,7 @@ class TimeSheetsActivity : AppCompatActivity() {
         accountsNavigationButton = findViewById(R.id.accountsNavigationButton)
         homeNavigationButton = findViewById(R.id.homeNavigationButton)
 
+
         // Listen for changes in the categories data
         categoriesReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
