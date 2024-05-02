@@ -47,7 +47,7 @@
         <activity android:name=".LogHoursActivity" />
         <activity android:name=".TasksActivity" />
         <activity android:name=".TimeSheetsActivity" />
-        <activity android:name=".TimeSheetsViewActivity" />
+        <activity android:name=".TimeSheetsViewActivity" android:exported="true"/>
 
         <meta-data
             android:name="preloaded_fonts"
