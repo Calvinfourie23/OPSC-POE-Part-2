@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/loginbackground">
+
+    <Button
+        android:id="@+id/logHoursNavigationButton"
+        android:layout_width="75dp"
+        android:layout_height="35dp"
+        android:backgroundTint="#000000"
+        android:insetBottom="0dp"
+        android:padding="0dp"
+        android:text="Log Hours"
+        app:cornerRadius="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/timeSheetsNavigationButton"
+        app:layout_constraintStart_toEndOf="@+id/tasksNavigationButton"
+        tools:textSize="12sp" />
+
+    <ImageButton
+        android:id="@+id/homeNavigationButton"
+        android:layout_width="37dp"
+        android:layout_height="32dp"
+        android:background="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/home_icon"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/timeSheetsNavigationButton"
+        android:layout_width="75dp"
+        android:layout_height="35dp"
+        android:backgroundTint="#000000"
+        android:insetBottom="0dp"
+        android:padding="0dp"
+        android:text="Time Sheets"
+        app:cornerRadius="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/accountsNavigationButton"
+        app:layout_constraintStart_toEndOf="@+id/logHoursNavigationButton"
+        tools:textSize="12sp" />
+
+    <Button
+        android:id="@+id/categoriesNavigationButton"
+        android:layout_width="75dp"
+        android:layout_height="35dp"
+        android:backgroundTint="#000000"
+        android:insetBottom="0dp"
+        android:padding="0dp"
+        android:text="Catergories"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:cornerRadius="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tasksNavigationButton"
+        app:layout_constraintStart_toEndOf="@+id/homeNavigationButton" />
+
+    <Button
+        android:id="@+id/accountsNavigationButton"
+        android:layout_width="75dp"
+        android:layout_height="35dp"
+        android:backgroundTint="#000000"
+        android:insetBottom="0dp"
+        android:padding="0dp"
+        android:text="Accounts"
+        app:cornerRadius="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:textSize="12sp" />
+
+    <Button
+        android:id="@+id/tasksNavigationButton"
+        android:layout_width="75dp"
+        android:layout_height="35dp"
+        android:backgroundTint="#000000"
+        android:insetBottom="0dp"
+        android:padding="0dp"
+        android:text="Tasks"
+        app:cornerRadius="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/logHoursNavigationButton"
+        app:layout_constraintStart_toEndOf="@+id/categoriesNavigationButton"
+        tools:textSize="14sp" />
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="350dp"
+        android:layout_height="3dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:background="#000000"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="95dp" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="350dp"
+        android:layout_height="3dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:background="#000000"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="410dp" />
+
+    <TextView
+        android:id="@+id/tvTasksHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="4dp"
+        android:fontFamily="cursive"
+        android:text="Goals"
+        android:textColor="#FFFFFF"
+        android:textSize="60sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Form to Add New Task -->
+    <ScrollView
+        android:id="@+id/scrollViewTasks"
+        android:layout_width="373dp"
+        android:layout_height="278dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@id/llTaskForm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTasksHeader"
+        app:layout_constraintVertical_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/llTaskForm"
+        android:layout_width="384dp"
+        android:layout_height="177dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="100dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scrollViewTasks"
+        app:layout_constraintVertical_weight="1">
+
+        <EditText
+            android:id="@+id/etGoalName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Goal Name" />
+        <TextView
+            android:id="@+id/goalDurationText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Duration of Daily Goal Below" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/hourPicker"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLength="2"
+                android:layout_margin="8dp"
+                android:maxLines="1"
+                android:hint="Hour"
+                android:gravity="center"
+                android:imeOptions="actionNext" />
+
+            <EditText
+                android:id="@+id/minutePicker"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLength="2"
+                android:layout_margin="8dp"
+                android:maxLines="1"
+                android:hint="Minute"
+                android:gravity="center"
+                android:imeOptions="actionDone" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/addGoalButton"
+        android:layout_width="217dp"
+        android:layout_height="wrap_content"
+        android:text="Add a Goal"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llTaskForm" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "952267541784",
+    "firebase_url": "https://opsc7311-poe-part-2-48e16-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "opsc7311-poe-part-2-48e16",
+    "storage_bucket": "opsc7311-poe-part-2-48e16.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:952267541784:android:b13f38c94a2a9e5527e26d",
+        "android_client_info": {
+          "package_name": "com.example.opsc7311poepart2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8H28Tfe0bb_llnTMh7utgDIOyZSM1q_A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

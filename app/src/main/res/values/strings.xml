@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">OPSC7311 POE Part 2</string>
+    <string name="tasks">Tasks</string>
+    <string name="log_hours">Log Hours</string>
+    <string name="time_sheets">Time Sheets</string>
+    <string name="accounts">Accounts</string>
+    <string name="categories">Categories</string>
+    <string name="description">Description</string>
+    <string name="duration">Duration</string>
+    <string name="priority_level">Priority level</string>
+    <string name="color">Color</string>
+    <string name="add_a_category">Add a category</string>
+    <string name="date">Date:</string>
+</resources>
