@@ -145,13 +145,14 @@
         android:layout_width="380dp"
         android:layout_height="211dp"
         android:layout_margin="16dp"
+        android:layout_marginTop="12dp"
         android:background="#FFFEFE"
         android:orientation="vertical"
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.677"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toBottomOf="@+id/textViewCategories">
 
         <EditText
             android:id="@+id/categoryText"
