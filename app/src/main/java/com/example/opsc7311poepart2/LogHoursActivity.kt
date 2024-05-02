@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.Manifest
+import android.app.Activity
 import android.content.ContentValues
 import android.os.Bundle
 import android.os.Environment
@@ -29,6 +30,10 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 import java.util.Calendar
+import android.util.Log
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 
 class LogHoursActivity : AppCompatActivity() {
     private lateinit var databaseReference: DatabaseReference
@@ -42,6 +47,10 @@ class LogHoursActivity : AppCompatActivity() {
     private lateinit var timeSheetsNavigationButton: Button
     private lateinit var homeNavigationButton: ImageButton
     private lateinit var accountsNavigationButton: Button
+
+    private lateinit var takePictureLauncher: ActivityResultLauncher<Intent>
+
+    private val TAG = "LogHoursActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -179,6 +188,18 @@ class LogHoursActivity : AppCompatActivity() {
                 requestCameraPermission()
             }
         }
+
+        takePictureLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // Handle the result
+                val imageView = findViewById<ImageView>(R.id.imageView1)
+                imageView.setImageURI(imageUri)
+                imageView.invalidate()
+            } else {
+                // Handle the case where the user cancels or the operation fails
+                Toast.makeText(this, "Camera operation canceled", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun navigateToAddTask() {
@@ -227,7 +248,30 @@ class LogHoursActivity : AppCompatActivity() {
         )
     }
 
-    // Override onRequestPermissionsResult to handle permission request result
+    private fun dispatchTakePictureIntent() {
+        Log.d(TAG, "dispatchTakePictureIntent: Starting camera intent")
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (takePictureIntent.resolveActivity(packageManager) != null) {
+            if (checkWriteExternalStoragePermission()) {
+                val imageFile = createImageFile()
+                imageFile?.let {
+                    imageUri = FileProvider.getUriForFile(
+                        this,
+                        "com.example.opsc7311poepart2.fileprovider",
+                        it
+                    )
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+                    takePictureLauncher.launch(takePictureIntent)
+                }
+            } else {
+                Log.d(TAG, "dispatchTakePictureIntent: Write external storage permission not granted")
+                requestWriteExternalStoragePermission()
+            }
+        } else {
+            Log.d(TAG, "dispatchTakePictureIntent: No camera app found")
+        }
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -236,30 +280,11 @@ class LogHoursActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted, proceed with the camera operation
+                Log.d(TAG, "onRequestPermissionsResult: Camera permission granted, starting camera intent")
                 dispatchTakePictureIntent()
             } else {
+                Log.d(TAG, "onRequestPermissionsResult: Camera permission denied")
                 // Permission denied, handle accordingly (e.g., show a message)
-            }
-        }
-    }
-
-    private fun dispatchTakePictureIntent() {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (takePictureIntent.resolveActivity(packageManager) != null) {
-            if (checkWriteExternalStoragePermission()) {
-                val imageFile = createImageFile()
-                imageFile?.let {
-                    val imageUri = FileProvider.getUriForFile(
-                        this,
-                        "com.example.opsc7311poepart2.fileprovider",
-                        it
-                    )
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-                }
-            } else {
-                requestWriteExternalStoragePermission()
             }
         }
     }
