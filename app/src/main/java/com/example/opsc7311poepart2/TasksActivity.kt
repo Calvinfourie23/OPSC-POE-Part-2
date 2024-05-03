@@ -106,7 +106,7 @@ class TasksActivity : AppCompatActivity() {
                     }
 
                     override fun onCancelled(databaseError: DatabaseError) {
-                        // Handle database errors if necessary
+                        
                     }
                 })
 
@@ -144,7 +144,7 @@ class TasksActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                // Handle database errors if necessary
+
             }
         })
     }
