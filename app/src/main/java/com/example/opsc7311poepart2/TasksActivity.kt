@@ -6,6 +6,9 @@ import android.text.InputFilter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.ScrollView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -22,6 +25,9 @@ class TasksActivity : AppCompatActivity() {
     private lateinit var logHoursNavigationButton: Button
     private lateinit var accountsNavigationButton: Button
     private lateinit var homeNavigationButton: ImageButton
+
+    private lateinit var scrollView: ScrollView
+    private lateinit var goalsContainer: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +49,8 @@ class TasksActivity : AppCompatActivity() {
         logHoursNavigationButton = findViewById(R.id.logHoursNavigationButton)
         accountsNavigationButton = findViewById(R.id.accountsNavigationButton)
         homeNavigationButton = findViewById(R.id.homeNavigationButton)
+        scrollView = findViewById(R.id.scrollViewGoals)
+        goalsContainer = findViewById(R.id.goalsContainer)
 
         minHourPicker.filters = arrayOf(InputFilter.LengthFilter(2), RangeInputFilter(0, 23))
         maxHourPicker.filters = arrayOf(InputFilter.LengthFilter(2), RangeInputFilter(0, 23))
@@ -110,7 +118,37 @@ class TasksActivity : AppCompatActivity() {
                 maxMinutePicker.text.clear()
             }
         }
+        retrieveAndDisplayGoals()
     }
+
+    private fun retrieveAndDisplayGoals() {
+        databaseReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                goalsContainer.removeAllViews() // Clear existing views
+
+                for (goalSnapshot in dataSnapshot.children) {
+                    val goal = goalSnapshot.getValue(Goal::class.java)
+                    goal?.let {
+                        val goalView = layoutInflater.inflate(R.layout.goal_item, null)
+                        val goalNameTextView = goalView.findViewById<TextView>(R.id.goalNameTextView)
+                        val minDurationTextView = goalView.findViewById<TextView>(R.id.minDurationTextView)
+                        val maxDurationTextView = goalView.findViewById<TextView>(R.id.maxDurationTextView)
+
+                        goalNameTextView.text = it.name
+                        minDurationTextView.text = "Min: ${it.minDuration/60} Hours and ${it.minDuration%60} Minutes"
+                        maxDurationTextView.text = "Max: ${it.maxDuration/60} Hours and ${it.maxDuration%60} Minutes"
+
+                        goalsContainer.addView(goalView)
+                    }
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Handle database errors if necessary
+            }
+        })
+    }
+
     private fun navigateToCategories() {
 
         val intent = Intent(this, CategoriesActivity::class.java)
