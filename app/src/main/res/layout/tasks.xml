@@ -103,12 +103,13 @@
         android:layout_width="350dp"
         android:layout_height="3dp"
         android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="12dp"
         android:background="#000000"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="410dp" />
+        app:layout_constraintHorizontal_bias="0.486"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addGoalButton" />
 
     <TextView
         android:id="@+id/tvTasksHeader"
@@ -124,83 +125,136 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Form to Add New Task -->
-    <ScrollView
-        android:id="@+id/scrollViewTasks"
-        android:layout_width="373dp"
-        android:layout_height="278dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@id/llTaskForm"
+
+    <View
+        android:id="@+id/view5"
+        android:layout_width="413dp"
+        android:layout_height="200dp"
+        android:background="#3B385DB8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTasksHeader"
-        app:layout_constraintVertical_weight="1">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-
-        </LinearLayout>
-    </ScrollView>
+        app:layout_constraintTop_toBottomOf="@+id/view1" />
 
     <LinearLayout
         android:id="@+id/llTaskForm"
-        android:layout_width="384dp"
-        android:layout_height="177dp"
+        android:layout_width="386dp"
+        android:layout_height="185dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="25dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="100dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/scrollViewTasks"
+        app:layout_constraintTop_toBottomOf="@+id/view1"
         app:layout_constraintVertical_weight="1">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Type Goal Name"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/etGoalName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Goal Name" />
+
         <TextView
             android:id="@+id/goalDurationText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Select Duration of Daily Goal Below" />
+            android:text="Select Duration of Daily Goal Below"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/hourPicker"
-                android:layout_width="50dp"
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:maxLength="2"
-                android:layout_margin="8dp"
-                android:maxLines="1"
-                android:hint="Hour"
-                android:gravity="center"
-                android:imeOptions="actionNext" />
+                android:layout_weight="1"
+                android:text="Minimum"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/minutePicker"
-                android:layout_width="50dp"
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:maxLength="2"
-                android:layout_margin="8dp"
-                android:maxLines="1"
-                android:hint="Minute"
-                android:gravity="center"
-                android:imeOptions="actionDone" />
+                android:layout_weight="1"
+                android:text="Maximum"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="180dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/minHourPicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Hour"
+                    android:inputType="number"
+                    android:gravity="center" />
+
+                <EditText
+                    android:id="@+id/minMinutePicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Min"
+                    android:inputType="number"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/maxHourPicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Hour"
+                    android:inputType="number"
+                    android:gravity="center" />
+
+                <EditText
+                    android:id="@+id/maxMinutePicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Min"
+                    android:inputType="number"
+                    android:gravity="center" />
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -216,5 +270,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/llTaskForm" />
+
+    <ScrollView
+        android:id="@+id/scrollViewGoals"
+        android:layout_width="355dp"
+        android:layout_height="260dp"
+        android:layout_marginBottom="56dp"
+        app:layout_constraintBottom_toTopOf="@+id/logHoursNavigationButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view2">
+
+        <LinearLayout
+            android:id="@+id/goalsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

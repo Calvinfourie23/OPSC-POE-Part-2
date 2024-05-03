@@ -6,7 +6,6 @@ import android.text.InputFilter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.NumberPicker
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -33,8 +32,10 @@ class TasksActivity : AppCompatActivity() {
 
         val addGoalButton = findViewById<Button>(R.id.addGoalButton)
         val goalNameEditText = findViewById<EditText>(R.id.etGoalName)
-        val hourPicker = findViewById<EditText>(R.id.hourPicker)
-        val minutePicker = findViewById<EditText>(R.id.minutePicker)
+        val minHourPicker = findViewById<EditText>(R.id.minHourPicker)
+        val minMinutePicker = findViewById<EditText>(R.id.minMinutePicker)
+        val maxHourPicker = findViewById<EditText>(R.id.maxHourPicker)
+        val maxMinutePicker = findViewById<EditText>(R.id.maxMinutePicker)
 
         categoriesNavigationButton = findViewById(R.id.categoriesNavigationButton)
         tasksNavigationButton = findViewById(R.id.tasksNavigationButton)
@@ -43,9 +44,10 @@ class TasksActivity : AppCompatActivity() {
         accountsNavigationButton = findViewById(R.id.accountsNavigationButton)
         homeNavigationButton = findViewById(R.id.homeNavigationButton)
 
-// Set input filters to restrict input to numbers within the desired range
-        hourPicker.filters = arrayOf(InputFilter.LengthFilter(2), RangeInputFilter(0, 23))
-        minutePicker.filters = arrayOf(InputFilter.LengthFilter(2), RangeInputFilter(0, 59))
+        minHourPicker.filters = arrayOf(InputFilter.LengthFilter(2), RangeInputFilter(0, 23))
+        maxHourPicker.filters = arrayOf(InputFilter.LengthFilter(2), RangeInputFilter(0, 23))
+        minMinutePicker.filters = arrayOf(InputFilter.LengthFilter(2), RangeInputFilter(0, 59))
+        maxMinutePicker.filters = arrayOf(InputFilter.LengthFilter(2), RangeInputFilter(0, 59))
 
         categoriesNavigationButton.setOnClickListener { navigateToCategories() }
         tasksNavigationButton.setOnClickListener { navigateToTasks() }
@@ -60,16 +62,22 @@ class TasksActivity : AppCompatActivity() {
             val goalName = goalNameEditText.text.toString().trim()
 
             // Get duration from EditText fields
-            val hourText = hourPicker.text.toString()
-            val minuteText = minutePicker.text.toString()
+            val minHourText = minHourPicker.text.toString()
+            val maxHourText = maxHourPicker.text.toString()
+            val minMinuteText = minMinutePicker.text.toString()
+            val maxMinuteText = maxMinutePicker.text.toString()
 
             // Convert text to integers, default to 0 if parsing fails
-            val hour = hourText.toIntOrNull() ?: 0
-            val minute = minuteText.toIntOrNull() ?: 0
-            val duration = hour * 60 + minute // Convert hours to minutes and add with minutes
+            val minHour = minHourText.toIntOrNull() ?: 0
+            val maxHour = maxHourText.toIntOrNull() ?: 0
+            val minMinute = minMinuteText.toIntOrNull() ?: 0
+            val maxMinute = maxMinuteText.toIntOrNull() ?: 0
+
+            val minDuration = minHour * 60 + minMinute
+            val maxDuration = maxHour * 60 + maxMinute
 
             // Check if goal name is not empty and duration is greater than 0
-            if (goalName.isNotEmpty() && duration > 0) {
+            if (goalName.isNotEmpty() && minDuration > 0 && maxDuration > 0 && minDuration <= maxDuration) {
                 // Check if a goal already exists in the database
                 databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -77,13 +85,13 @@ class TasksActivity : AppCompatActivity() {
 
                         // If an existing goal is found, update its values
                         existingGoal?.let {
-                            val updatedGoal = Goal(it.id!!, goalName, duration) // Ensure id is not nullable
+                            val updatedGoal = Goal(it.id!!, goalName, minDuration, maxDuration) // Ensure id is not nullable
                             databaseReference.child(it.id).setValue(updatedGoal)
                         } ?: run {
                             // If no existing goal is found, add a new goal
                             val goalId = databaseReference.push().key
                             goalId?.let {
-                                val goal = Goal(it, goalName, duration)
+                                val goal = Goal(it, goalName, minDuration, maxDuration)
                                 databaseReference.child(it).setValue(goal)
                             }
                         }
@@ -96,9 +104,10 @@ class TasksActivity : AppCompatActivity() {
 
                 // Clear input fields after adding or updating goal
                 goalNameEditText.text.clear()
-                // Set default values for EditText fields
-                hourPicker.setText("0")
-                minutePicker.setText("0")
+                minHourPicker.text.clear()
+                maxHourPicker.text.clear()
+                minMinutePicker.text.clear()
+                maxMinutePicker.text.clear()
             }
         }
     }
